@@ -1,4 +1,4 @@
-@echo on
+@echo off
 @echo killing active adb sessions
 @echo.
 taskkill /f /im adb.exe >nul
