@@ -32,6 +32,7 @@ timeout 1 >nul
 @echo. Rebooting device ...
 timeout 1 >nul
 call :rebooting
+timeout 5 >nul
 call :pingloop
 call :connecting
 
