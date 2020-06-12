@@ -1,4 +1,4 @@
-@echo off
+@echo on
 @echo killing active adb sessions
 @echo.
 taskkill /f /im adb.exe >nul
@@ -27,31 +27,29 @@ echo.
 call :connecting
 
 @echo. Disabling Verity
-"%cd%\.compiler\adb" disable-verity
+"%cd%\compiler\adb" disable-verity
 timeout 1 >nul
 @echo. Rebooting device ...
-timeout 1 >nul
 call :rebooting
-timeout 5 >nul
 call :pingloop
 call :connecting
 
-"%cd%\.compiler\adb" shell setenforce 0
+"%cd%\compiler\adb" shell setenforce 0
 @echo Pushing SU file
-"%cd%\.compiler\adb" push su /system/bin/su
-"%cd%\.compiler\adb" push su /system/xbin/su
+"%cd%\compiler\adb" push su /system/bin/su
+"%cd%\compiler\adb" push su /system/xbin/su
 timeout 1 >nul
-"%cd%\.compiler\adb" shell chmod 06755 /system/bin/su
-"%cd%\.compiler\adb" shell chmod 06755 /system/xbin/su
+"%cd%\compiler\adb" shell chmod 06755 /system/bin/su
+"%cd%\compiler\adb" shell chmod 06755 /system/xbin/su
 timeout 1 >nul
 echo.
 echo Installing SU
-"%cd%\.compiler\adb" shell /system/bin/su --install
+"%cd%\compiler\adb" shell /system/bin/su --install
 timeout 1 >nul
-start /min "%cd%\.compiler\adb shell /system/bin/su --daemon&"
+start /min %cd%\compiler\adb shell /system/bin/su --daemon&
 timeout /t 3 >nul
-"%cd%\.compiler\adb" shell /system/bin/su --daemon&
-"%cd%\.compiler\adb" push rooting.rc /system/etc/init/rooting.rc
+"%cd%\compiler\adb" shell /system/bin/su --daemon&
+"%cd%\compiler\adb" push rooting.rc /system/etc/init/rooting.rc
 call :rebooting
 
 taskkill /f /im adb.exe >nul
@@ -63,15 +61,15 @@ exit
 
 :connecting
 echo. Connecting to device...
-"%cd%\.compiler\adb" disconnect
+"%cd%\compiler\adb" disconnect
 timeout 1 >nul
-"%cd%\.compiler\adb" connect "%_inputname%"
+"%cd%\compiler\adb" connect "%_inputname%"
 timeout 1 >nul
 echo Perfoming adb root
-"%cd%\.compiler\adb" root
+"%cd%\compiler\adb" root
 timeout 1 >nul
 echo performing adb remount
-"%cd%\.compiler\adb" remount
+"%cd%\compiler\adb" remount
 echo.
 timeout 1 >nul
 goto :eof
@@ -88,5 +86,6 @@ goto :eof
 timeout 1 >nul
 echo.
 @echo. Android device is rebooting , please wait...
-start "" /min "%CD%\.compiler\adb.exe" reboot
+start "" /min "%CD%\compiler\adb.exe" reboot
+timeout 3 >nul
 goto :eof
