@@ -1,0 +1,6 @@
+service rooting /system/bin/su --daemon
+    class main
+    priority 10
+    user root
+    oneshot
+    seclabel u:object_r:system_file:s0
